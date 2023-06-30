@@ -2,9 +2,18 @@ export default class MinHeap {
     public length: number;
     private heap: number[];
 
-    constructor() {
+    constructor(array: number[]) {
         this.length = 0;
-        this.heap = [];
+        this.heap = this.buildHeap(array));
+    }
+
+    buildHeap(array: number[]): number[] {
+        let parent_idx = Math.floor((array.length - 1)/2);
+        for(let i = parent_idx; i >= 0; i--) {
+            this.heapifyDown(i, array.length -1, array);
+        }
+        this.length = array.length;
+        return array;
     }
 
     heapifyDown(curr_idx: number, end_idx: number, heap: number[]): void {
@@ -58,7 +67,10 @@ export default class MinHeap {
         this.heapifyDown(0, this.heap.length - 1, this.heap);
         return min_value;
     }
-    swap(idx_1: number, idx_2: number, heap: number[]) {
+    swap(idx_1: number, idx_2: number, heap: number[]): void {
         [heap[idx_1], heap[idx_2]] = [heap[idx_2], heap[idx_1]];
+    }
+    peek() {
+        return this.heap[0];
     }
 }
